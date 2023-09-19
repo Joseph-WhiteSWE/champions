@@ -65,6 +65,8 @@ h2{
 }
 
 li{
+    list-style-type: none;
+    border-radius: 5px;
     background: white;
     height:70px;
     width:350px;
