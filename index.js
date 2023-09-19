@@ -15,7 +15,8 @@ const endorseInDB = ref(database, "endorse")
 
 btnEL.addEventListener("click", function () {
     prependValue(inputEl.value);
-    push(endorseInDB, inputEl.value);
+ //to prevent from input from saving to DB
+ // push(endorseInDB, inputEl.value); 
     clearValue();
 });
 
