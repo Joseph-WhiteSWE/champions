@@ -13,41 +13,33 @@ const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const endorseInDB = ref(database, "endorse")
 
-onValueFunc()
-let isCLicked = false
-
 btnEL.addEventListener("click", function () {
-    appendValue(inputEl.value)
-    isCLicked = true
-    push(endorseInDB, inputEl.value)
-    clearValue()
-    
-})
+    prependValue(inputEl.value);
+    push(endorseInDB, inputEl.value);
+    clearValue();
+});
 
-function appendValue(itemValue){
-    endorseUl.innerHTML = `<li> ${itemValue} </li>`
+onValueFunc();
+
+function prependValue(itemValue) {
+    let li = document.createElement("li");
+    li.textContent = itemValue;
+    endorseUl.insertBefore(li, endorseUl.firstChild);
 }
 
-function clearValue(){
-    inputEl.value = ""
+function clearValue() {
+    inputEl.value = "";
 }
 
-function onValueFunc(){
-    onValue(endorseInDB, function (snapshot){
-        if(snapshot.exists()){
-        let itemsArray = Object.values(snapshot.val());
-            if(isCLicked){
-                for(let i=0; i < itemsArray.length -1; i++ ){
-                endorseUl.innerHTML += `<li>${itemsArray[i]}</li>`
-                }
-            
-            }  else{
-                for(let i=0; i < itemsArray.length; i++ ){
-                endorseUl.innerHTML += `<li>${itemsArray[i]}</li>`
-                }
+function onValueFunc() {
+    onValue(endorseInDB, function (snapshot) {
+        if (snapshot.exists()) {
+            let itemsArray = Object.values(snapshot.val());
+            endorseUl.innerHTML = "";
+            for (let i = 0; i < itemsArray.length; i++) {
+                prependValue(itemsArray[i]);
             }
         }
-    
     });
 }
 
